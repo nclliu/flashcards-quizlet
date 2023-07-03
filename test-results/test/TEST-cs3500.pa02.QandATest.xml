@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa02.QandATest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-08T20:27:50" hostname="MacBook-Air-2.local" time="0.002">
+  <properties/>
+  <testcase name="testqanda()" classname="cs3500.pa02.QandATest" time="0.002"/>
+  <system-out><![CDATA[test1
+answer1
+Please enter 1.easy 2.hard 3. exit
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

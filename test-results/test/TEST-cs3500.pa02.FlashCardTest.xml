@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa02.FlashCardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-08T20:27:50" hostname="MacBook-Air-2.local" time="0.001">
+  <properties/>
+  <testcase name="testFlash()" classname="cs3500.pa02.FlashCardTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

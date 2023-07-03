@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa02.DriverTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-08T20:27:50" hostname="MacBook-Air-2.local" time="0.011">
+  <properties/>
+  <testcase name="testMain()" classname="cs3500.pa02.DriverTest" time="0.011"/>
+  <system-out><![CDATA[Welcome to your new study session! Please provide the path to a .sr file.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
