@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.controller</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package cs3500.controller;
+
+import cs3500.pa02.MdFile;
+import cs3500.pa02.MdFileWalker;
+import cs3500.pa02.Sort;
+import cs3500.pa2.Flashcard;
+import cs3500.pa2.QandA;
+import cs3500.pa2.StudyGuide;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
+/**
+ * controller class to run appropriate sessions
+ */
+<span class="fc" id="L17">public class Controller {</span>
+  /**
+   * @param p path to walk files in
+   * @param comp sort type
+   * @param o output path to write file to
+   * @throws IOException when no file found
+   */
+  public void runStudyGuide(Path p, String comp, Path o) throws IOException {
+<span class="fc" id="L25">    ArrayList&lt;MdFile&gt; files = new ArrayList&lt;MdFile&gt;();</span>
+<span class="fc" id="L26">    MdFileWalker mdf = new MdFileWalker(files);</span>
+<span class="fc" id="L27">    Files.walkFileTree(p, mdf);</span>
+<span class="fc" id="L28">    ArrayList&lt;MdFile&gt; validf = mdf.getFiles();</span>
+
+<span class="fc" id="L30">    StudyGuide notes = new StudyGuide(validf);</span>
+<span class="fc" id="L31">    notes.sort(Sort.valueOf(comp));</span>
+<span class="fc" id="L32">    notes.output(o);</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * @param p path to the sr file
+   * @param n number of questions user would like to answer
+   * @throws IOException
+   */
+  public void runSession(Path p, int n) throws IOException {
+<span class="nc" id="L41">    QandA session = new QandA(p);</span>
+<span class="nc" id="L42">    ArrayList&lt;Flashcard&gt; questions = session.sessionFlashcards(n);</span>
+<span class="nc" id="L43">    session.showQuestions(questions);</span>
+<span class="nc" id="L44">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

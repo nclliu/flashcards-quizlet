@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Study.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa2</a> &gt; <span class="el_source">Study.java</span></div><h1>Study.java</h1><pre class="source lang-java linenums">package cs3500.pa2;
+
+import cs3500.pa02.MdFile;
+import cs3500.pa02.Sort;
+import cs3500.pa02.SortCreated;
+import cs3500.pa02.SortModified;
+import cs3500.pa02.SortName;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public abstract class Study {
+  ArrayList&lt;MdFile&gt; list;
+
+<span class="fc" id="L17">  public Study(ArrayList&lt;MdFile&gt; list) {</span>
+<span class="fc" id="L18">    this.list = list;</span>
+<span class="fc" id="L19">  }</span>
+  public void sort(Sort comp) {
+<span class="pc bpc" id="L21" title="1 of 4 branches missed.">    switch (comp) {</span>
+      case filename:
+<span class="fc" id="L23">        Collections.sort(list, new SortName());</span>
+<span class="fc" id="L24">        break;</span>
+      case created:
+<span class="fc" id="L26">        Collections.sort(list, new SortCreated());</span>
+<span class="fc" id="L27">        break;</span>
+      case modified:
+<span class="fc" id="L29">        Collections.sort(list, new SortModified());</span>
+    }
+<span class="fc" id="L31">  }</span>
+  public abstract FileWriter output(Path p) throws IOException;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

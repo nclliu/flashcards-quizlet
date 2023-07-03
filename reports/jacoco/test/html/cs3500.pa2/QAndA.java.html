@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QandA.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa2</a> &gt; <span class="el_source">QandA.java</span></div><h1>QandA.java</h1><pre class="source lang-java linenums">package cs3500.pa2;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+/**
+ * class representing q and a session
+ */
+public class QandA {
+  public ArrayList&lt;Flashcard&gt; allcards;
+  private int questions;
+  private Path file;
+  private int easytohard;
+  private int hardtoeasy;
+
+<span class="fc" id="L19">  public QandA(Path file) throws IOException {</span>
+<span class="fc" id="L20">    this.questions = 0;</span>
+<span class="fc" id="L21">    this.file = file;</span>
+<span class="nc" id="L22">    this.allcards = generateFlashcards();</span>
+<span class="nc" id="L23">  }</span>
+
+  /**
+   * constructor for testing
+   * @param f sets all cards to given list of flashcards
+   */
+<span class="fc" id="L29">  public QandA(ArrayList&lt;Flashcard&gt; f) {</span>
+<span class="fc" id="L30">    this.questions = 0;</span>
+<span class="fc" id="L31">    this.file = null;</span>
+<span class="fc" id="L32">    this.allcards = f;</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * will create list of flashcards containing all questions in sr file
+   * @return list of flashcards with all questions in sr file
+   * @throws IOException for exceptions
+   */
+  public ArrayList&lt;Flashcard&gt; generateFlashcards() throws IOException {
+<span class="fc" id="L41">    ArrayList&lt;Flashcard&gt; flashcards = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L42">    Scanner scanner = new Scanner(this.file);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">    while (scanner.hasNext()) {</span>
+<span class="nc" id="L44">      String s = scanner.nextLine();</span>
+<span class="nc" id="L45">      String q = s.substring(0, s.indexOf(&quot;:::&quot;));</span>
+<span class="nc" id="L46">      String a = s.substring(s.indexOf(&quot;:::&quot;) + 3, s.length());</span>
+<span class="nc" id="L47">      flashcards.add(new Flashcard(q, a, Level.HARD));</span>
+<span class="nc" id="L48">    }</span>
+<span class="nc" id="L49">    return flashcards;</span>
+  }
+
+  /**
+   * creates flashcards to use in current session based on user input
+   * @param n the number of flashcards in this session
+   * @return list of flashcards, size n
+   */
+  public ArrayList&lt;Flashcard&gt; sessionFlashcards(int n) {
+<span class="nc" id="L58">    ArrayList&lt;Flashcard&gt; output = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L59">    Random random = new Random();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">    for(int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L61">      int num = random.nextInt(0, allcards.size());</span>
+<span class="nc" id="L62">      output.add(allcards.get(num));</span>
+<span class="nc" id="L63">      allcards.remove(num);</span>
+    }
+<span class="nc" id="L65">    return output;</span>
+  }
+
+  /**
+   * will show user questions, answers and prompts
+   * updates questions accordingly
+   * updates state of q and a session
+   * @param questions the list of this session's flashcards
+   */
+  public void showQuestions(ArrayList&lt;Flashcard&gt; questions) {
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">    for(int i = 0; i &lt; questions.size(); i++) {</span>
+<span class="fc" id="L76">      Flashcard f = questions.get(i);</span>
+<span class="fc" id="L77">      System.out.println(f.question);</span>
+<span class="fc" id="L78">      System.out.println(f.answer);</span>
+<span class="fc" id="L79">      System.out.println(&quot;Please enter 1.easy 2.hard 3. exit&quot;);</span>
+<span class="fc" id="L80">      Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L81">      int n = Integer.parseInt(scanner.nextLine());</span>
+<span class="nc bnc" id="L82" title="All 4 branches missed.">      if(n == 1 || n == 2) {</span>
+<span class="nc" id="L83">        this.questions++;</span>
+      }
+<span class="nc bnc" id="L85" title="All 4 branches missed.">      if(n == 1 &amp;&amp; !f.level.equals(Level.EASY)) {</span>
+<span class="nc" id="L86">        this.hardtoeasy++;</span>
+<span class="nc" id="L87">        questions.set(i, new Flashcard(f.question, f.answer, Level.EASY));</span>
+      }
+<span class="nc bnc" id="L89" title="All 4 branches missed.">      if(n == 2 &amp;&amp; !f.level.equals(Level.HARD)) {</span>
+<span class="nc" id="L90">        this.easytohard++;</span>
+<span class="nc" id="L91">        questions.set(i, new Flashcard(f.question, f.answer, Level.HARD));</span>
+      }
+<span class="nc bnc" id="L93" title="All 4 branches missed.">      if(n == 3 || i == questions.size() - 1) {</span>
+<span class="nc" id="L94">        printoutmessage(questions);</span>
+      }
+    }
+<span class="nc" id="L97">  }</span>
+
+  /**
+   * prints out the final message when session concludes
+   * @param questions this sessions list of questions
+   */
+  public void printoutmessage(ArrayList&lt;Flashcard&gt; questions) {
+<span class="nc" id="L104">    int hard = 0;</span>
+<span class="nc" id="L105">    int easy = 0;</span>
+<span class="nc" id="L106">    System.out.println(this.allcards.size());</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">    for(int i = 0; i &lt; questions.size(); i++) {</span>
+<span class="nc" id="L109">      this.allcards.add(questions.get(i));</span>
+    }
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">    for(Flashcard f : this.allcards) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">      if(f.level.equals(Level.EASY)) {</span>
+<span class="nc" id="L114">        easy++;</span>
+      }
+      else {
+<span class="nc" id="L117">        hard++;</span>
+      }
+<span class="nc" id="L119">    }</span>
+
+<span class="nc" id="L121">    System.out.println(&quot;You've answered &quot; + this.questions + &quot; questions in total&quot;);</span>
+<span class="nc" id="L122">    System.out.println(&quot;There are now &quot; + hard + &quot; hard questions in the bank&quot;);</span>
+<span class="nc" id="L123">    System.out.println(&quot;There are now &quot; + easy + &quot; easy questions in the bank&quot;);</span>
+<span class="nc" id="L124">    System.out.println(&quot;A total of &quot; + this.easytohard + &quot; were classified as easy but changed to hard&quot;);</span>
+<span class="nc" id="L125">    System.out.println(&quot;A total of &quot; + this.hardtoeasy + &quot; were classified as easy but changed to hard&quot;);</span>
+<span class="nc" id="L126">  }</span>
+
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

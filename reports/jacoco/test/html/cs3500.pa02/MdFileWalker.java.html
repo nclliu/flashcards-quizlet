@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MdFileWalker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa02</a> &gt; <span class="el_source">MdFileWalker.java</span></div><h1>MdFileWalker.java</h1><pre class="source lang-java linenums">package cs3500.pa02;
+
+import static java.nio.file.FileVisitResult.CONTINUE;
+
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+
+/**
+ * walks filetree to find all md files
+ */
+public class MdFileWalker implements FileVisitor&lt;Path&gt; {
+
+<span class="fc" id="L17">  ArrayList&lt;MdFile&gt; files = new ArrayList&lt;&gt;();</span>
+
+  /**
+   * Initializes files to given file
+   *
+   * @param f given list of paths
+   */
+<span class="fc" id="L24">  public MdFileWalker(ArrayList&lt;MdFile&gt; f) {</span>
+<span class="fc" id="L25">    files = f;</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * what to do at the beginning of processing directory
+   *
+   * @param dir
+   *          a reference to the directory
+   * @param attrs
+   *          the directory's basic attributes
+   *
+   * @return a directive to walk
+   * @throws IOException when nothing found
+   */
+  @Override
+  public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+<span class="fc" id="L41">    System.out.format(&quot;Starting Directory: %s%n&quot;, dir);</span>
+<span class="fc" id="L42">    return CONTINUE;</span>
+  }
+
+  /**
+   * what to do when file is visited
+   *
+   * @param file
+   *          a reference to the file
+   * @param attrs
+   *          the file's basic attributes
+   * @return directive on how to process current item's siblings and children.
+   * In this case, we continue.
+   * @throws IOException
+   */
+  @Override
+  public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+<span class="fc" id="L58">    String fileName = file.getFileName().toString();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">    if (fileName.endsWith(&quot;.md&quot;)) {</span>
+<span class="fc" id="L60">      MdFile mdf = new MdFile(file, (int) System.currentTimeMillis(),</span>
+<span class="fc" id="L61">          (int) System.currentTimeMillis());</span>
+<span class="fc" id="L62">      files.add(mdf);</span>
+    }
+<span class="fc" id="L64">    return CONTINUE;</span>
+  }
+
+  /**
+   * what to do when file cannot be found
+   * @param file
+   *          a reference to the file
+   * @param exc
+   *          the I/O exception that prevented the file from being visited
+   * @return
+   * @throws IOException throws exception
+   */
+  @Override
+  public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+<span class="nc" id="L78">    System.err.println(exc);</span>
+<span class="nc" id="L79">    return CONTINUE;</span>
+  }
+
+  /**
+   * @param dir
+   *          a reference to the directory
+   * @param exc
+   *          {@code null} if the iteration of the directory completes without
+   *          an error; otherwise the I/O exception that caused the iteration
+   *          of the directory to complete prematurely
+   *
+   * @return
+   * @throws IOException throws exception
+   */
+  @Override
+  public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+<span class="fc" id="L95">    System.out.format(&quot;Starting Directory: %s%n&quot;, dir);</span>
+<span class="fc" id="L96">    return CONTINUE;</span>
+  }
+
+  /**
+   * @return list of files accumulated
+   */
+  public ArrayList&lt;MdFile&gt; getFiles() {
+<span class="fc" id="L103">    return files;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
